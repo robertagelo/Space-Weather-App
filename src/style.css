@@ -135,6 +135,7 @@ img {
 }
 
 .forecast-box {
+  border-radius: 15px;
   padding: 10px 0;
   margin: 20px 5px;
   transition: all 300ms ease-in-out;
