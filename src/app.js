@@ -19,14 +19,22 @@ function showDefaultWeather(response) {
   icon.innerHTML = `<img src="${defaultIconUrl}" alt="weather icon"></img>`;
 }
 
+function getDefaultForecast(defaultCity) {
+  let apiKey = "96f59ob69a32facbb34b2tdb5d2e7405";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${defaultCity}&key=${apiKey}`;
+
+  axios.get(apiUrl).then(displayForecast);
+}
+
 function searchDefaultCity(defaultCity) {
   let apiKey = "96f59ob69a32facbb34b2tdb5d2e7405";
-  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${defaultCity}&key=${apiKey}`;
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${defaultCity}&key=${apiKey}&units=metric`;
 
   axios.get(apiUrl).then(showDefaultWeather);
 }
 
 searchDefaultCity("Bologna");
+getDefaultForecast("Bologna");
 
 //Search handling
 
@@ -107,7 +115,53 @@ function geolocalize() {
 let geolocalizationButton = document.querySelector(".geolocation-button");
 geolocalizationButton.addEventListener("click", geolocalize);
 
+//Forecast
+
+function displayForecast(response) {
+  console.log(response);
+  let forecast = document.querySelector("#forecast");
+
+  let forecastHTML = "";
+
+  let forecastDay = response.data.daily;
+  forecastDay.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      forecastHTML =
+        forecastHTML +
+        `<div class="col forecast-box">
+          <div class="forecast-day">${getForecastDay(forecastDay.time)}</div>
+          <img
+            src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${
+              forecastDay.condition.icon
+            }.png"
+            alt="Forecast weather icon"
+            width="60"
+          />
+          <div class="forecast-temp">
+            <span class="forecast-max">${Math.round(
+              forecastDay.temperature.maximum
+            )}</span>
+            <span class="forecast-min">${Math.round(
+              forecastDay.temperature.minimum
+            )}</span>
+          </div>
+        </div>`;
+    }
+  });
+
+  forecast.innerHTML = forecastHTML;
+}
+
 //Date handling
+
+function getForecastDay(timestamp) {
+  let now = new Date(timestamp * 1000);
+  let weekDay = now.getDay();
+
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[weekDay];
+}
 
 function showdate() {
   let now = new Date();
