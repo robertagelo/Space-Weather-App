@@ -131,6 +131,7 @@ img {
   display: flex;
   padding: 5px;
   align-items: center;
+  justify-content: space-around;
 }
 
 .forecast-box {

@@ -16,14 +16,7 @@ function showDefaultWeather(response) {
   let windSpeedElement = document.querySelector("#wind-speed");
   windSpeedElement.innerHTML = `${response.data.wind.speed} km/h`;
   let icon = document.querySelector("#weather-icon");
-  icon.innerHTML = `<img src="${defaultIconUrl}" alt="weather icon"></img>`;
-}
-
-function getDefaultForecast(defaultCity) {
-  let apiKey = "96f59ob69a32facbb34b2tdb5d2e7405";
-  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${defaultCity}&key=${apiKey}`;
-
-  axios.get(apiUrl).then(displayForecast);
+  icon.innerHTML = `<img src="${defaultIconUrl}" alt="weather icon" width="120"></img>`;
 }
 
 function searchDefaultCity(defaultCity) {
@@ -34,7 +27,7 @@ function searchDefaultCity(defaultCity) {
 }
 
 searchDefaultCity("Bologna");
-getDefaultForecast("Bologna");
+getForecast("Bologna");
 
 //Search handling
 
@@ -56,7 +49,9 @@ function showSearchedWeather(response) {
   let windSpeed = document.querySelector("#wind-speed");
   windSpeed.innerHTML = `${response.data.wind.speed} km/h`;
   let icon = document.querySelector("#weather-icon");
-  icon.innerHTML = `<img src="${cityIconUrl}" alt="weather icon"></img>`;
+  icon.innerHTML = `<img src="${cityIconUrl}" alt="weather icon" width="120"></img>`;
+
+  getForecast(response.data.city);
 }
 
 function getSearchedWeather(city) {
@@ -96,7 +91,9 @@ function showGeolocation(response) {
   let windSpeed = document.querySelector("#wind-speed");
   windSpeed.innerHTML = `${response.data.wind.speed} km/h`;
   let icon = document.querySelector("#weather-icon");
-  icon.innerHTML = `<img src="${geoIconUrl}" alt="weather icon"></img>`;
+  icon.innerHTML = `<img src="${geoIconUrl}" alt="weather icon" width="120"></img>`;
+
+  getForecast(response.data.city);
 }
 
 function getCoords(position) {
@@ -116,6 +113,13 @@ let geolocalizationButton = document.querySelector(".geolocation-button");
 geolocalizationButton.addEventListener("click", geolocalize);
 
 //Forecast
+
+function getForecast(city) {
+  let apiKey = "96f59ob69a32facbb34b2tdb5d2e7405";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}`;
+
+  axios.get(apiUrl).then(displayForecast);
+}
 
 function displayForecast(response) {
   console.log(response);
