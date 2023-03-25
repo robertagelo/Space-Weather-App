@@ -65,6 +65,11 @@ ul {
   padding: 0;
 }
 
+img {
+  display: block;
+  margin: 0 auto;
+}
+
 .app {
   background-color: #fff8ed;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
@@ -124,11 +129,36 @@ ul {
 
 .row {
   display: flex;
+  padding: 5px;
   align-items: center;
 }
 
-.conversion {
-  font-family: "Tilt Neon", cursive;
+.forecast-box {
+  padding: 10px 0;
+  margin: 20px 5px;
+  transition: all 300ms ease-in-out;
+}
+
+.forecast-box:hover {
+  background-color: #e6dccc;
+  border-radius: 15px;
+}
+
+.forecast-day {
   text-align: center;
-  margin: 5px;
+  font-size: 20px;
+}
+
+.forecast-temp {
+  text-align: center;
+}
+
+.forecast-max {
+  padding: 0 5px;
+  color: #0f4586;
+}
+
+.forecast-min {
+  padding: 0 5px;
+  color: #3e7dcb;
 }
